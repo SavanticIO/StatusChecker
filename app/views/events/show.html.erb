@@ -1,49 +1,77 @@
-<p>
-	<strong>Status:</strong>
-	<%= @event.status%>
-</p>
-<p>
-	<strong>Resolved:</strong>
-	<%= @event.resolved%>
-</p>
-<p>
-  <strong>Title:</strong>
-  <%= @event.title %>
-</p>
- 
-<p>
-  <strong>Text:</strong>
-  <%= @event.text %>
-</p>
-<p>
-  <strong>Date:</strong>
-  <%= @event.datetime%>
-</p>
-<h2>Comments</h2>
-<% @event.comments.each do |comment| %>
-  <p>
-    <strong>Commenter:</strong>
-    <%= comment.commenter %>
-  </p>
- 
-  <p>
-    <strong>Comment:</strong>
-    <%= comment.body %>
-  </p>
-<% end %>
-<h2>Add a Comment:</h2>
-<%= form_with(model: [ @event, @event.comments.build ], local: true) do |form| %>
-  <p>
-    <%= form.label :commenter %><br>
-    <%= form.text_field :commenter %>
-  </p>
-  <p>
-    <%= form.label :body %><br>
-    <%= form.text_area :body %>
-  </p>
-  <p>
-    <%= form.submit %>
-  </p>
-<% end %>
-<%= link_to 'Edit', edit_event_path(@event) %>
-<%= link_to 'Back', events_path %>
+<div id ="header">
+	<div class = "inner">
+		<h1>Status Checker</h1>
+		<ul>
+ 			<li><%= link_to 'Home Page', controller: 'welcome' %></li>
+ 			<li><%= link_to 'List of All Scheduled Events', controller: 'events' %></li>
+			<li><%= link_to 'List of All  Resolved Scheduled Events', controller: 'resolved' %></li>
+			<li><%= link_to 'RSS Feed', feed_path+".rss", :action => 'show', :format => :rss%></li>
+			<li><%= link_to 'Create New Event', new_event_path %></li>
+ 		</ul>
+	</div>
+</div>
+<div id ="content">
+	<div class="inner">
+		<div class = "stat">			      
+			      	<% if @event.resolved %>
+			      		<h4 class ="resolved">Resolved</h4>
+			      	<%else%>
+			      		<h4 class ="active">Active</h4>
+			      	<% end%>
+			      	<% case @event.status%>
+			      	<%when "critical"%>
+			      		<h4 class= "critical">Critical</h4>
+			      	<%when "severe"%>
+			      		<h4 class= "severe">Severe</h4>
+			      	<%when "important"%>
+			      		<h4 class= "important">Important</h4>
+			      	<%end%>
+		      	</div>
+		<h1><%= @event.title %></h1>
+		<%if @event.resolved%>
+			<p class="meta">Resolved at: <%= @event.resolvetime %></p>
+		<%else%>
+			<p class="meta">Last updated at: <%= @event.updated_at%></p>
+		<%end%>
+		<div class="afm cfm">
+			<p><%= @event.text%></p>
+		</div>
+		<div class = "options">
+			<h4 class="showedit"><%= link_to 'Edit', edit_event_path(@event) %></h4>
+			<h4 class="back"><%= link_to 'Back', events_path %></h4>
+		</div>
+		<div id="comments">
+			<h2>Latest update</h2>
+			<div class="comment">
+			<% @event.comments.each do |comment| %>
+				<h4 class="meta">Updated at:<%=comment.created_at%> by <%= comment.commenter %></h4>	
+				<div class = "options">
+  				<h4 class="delete"><%= link_to 'Delete Comment', [comment.event, comment], method: :delete,data: { confirm: 'Are you sure?' } %></h4>
+				</div>
+				<div class="afm cfm">	 
+			  <p>
+			    <%= comment.body %>
+			  </p>
+			  </div>
+			<% end %>
+			</div>
+			<h2>Add a Comment:</h2>
+			<br>
+			<%= form_with(model: [ @event, @event.comments.build ], local: true) do |form| %>
+			  <p>
+			    <%= form.label :commenter %><br>
+			    <%= form.text_field :commenter %>
+			  </p>
+			  <br>
+			  <p>
+			    <%= form.label :body %><br>
+			    <%= form.text_area :body %>
+			  </p>
+			  <br>
+			  <p>
+			    <%= form.submit %>
+			  </p>
+			<% end %>
+		</div>
+	</div>
+</div>

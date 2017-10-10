@@ -3,21 +3,42 @@
 		<h1>Status Checker</h1>
 		<ul>
 			<li><%= link_to 'Home Page', controller: 'welcome' %></li>
+			<li><%= link_to 'List of All Scheduled Events', controller: 'events' %></li>
+			<li><%= link_to 'List of All  Resolved Scheduled Events', controller: 'resolved' %></li>
+			<li><%= link_to 'RSS Feed', feed_path+".rss", :action => 'show', :format => :rss%></li>
+			<li><%= link_to 'Create New Event', new_event_path %></li>
 		</ul>
 	</div>
 </div>
 <div id = "content">
 	<div class = "inner">
 		<h3 class= "future" >Resolved Events</h3>
-			<% @resolvedpageinate.each do |event| %>
-		    <ul  class = "events resolved">	
-		      <li class = "event" style>
-		      	<h4 style><%= link_to event.title, event_path(event) %><h4>
-		      	<p class = "date"><%= event.datetime%></p>
+		<ul  class = "events resolved">
+		  	<% @resolvedpageinate.each do |event| %>
+		      	<li class = "event" style>
+		      	<div class = "stat">			      
+			      	<% if event.resolved %>
+			      		<h4 class ="resolved">Resolved</h4>
+			      	<%else%>
+			      		<h4 class ="active">Active</h4>
+			      	<% end%>
+			      	<% case event.status%>
+			      	<%when "critical"%>
+			      		<h4 class= "critical">Critical</h4>
+			      	<%when "severe"%>
+			      		<h4 class= "severe">Severe</h4>
+			      	<%when "important"%>
+			      		<h4 class= "important">Important</h4>
+			      	<%end%>
+		      	</div>
+		      	
+		      	<h4 class ="title"><%= link_to event.title, event_path(event) %></h4>
+		      	<p class = "date">Resolved At:  <%= event.resolvetime%></p>		      
 		      </li>
-		    </ul>
-		  <% end %>
-		</table>
-		<%= will_paginate @resolvedpageinate %>
+		    
+		  	<% end %>
+		  	
+		  </ul>
+				<%= will_paginate @resolvedpageinate %>
 	</div>
 </div>

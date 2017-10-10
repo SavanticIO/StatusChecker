@@ -1,44 +1,59 @@
-<h1>Edit Event</h1>
- 
-<%= form_with(model: @event) do |form| %>
- <% if @event.errors.any? %>
-    <div id="error_explanation">
-      <h2>
-        <%= pluralize(@event.errors.count, "error") %> prohibited
-        this event from being saved:
-      </h2>
-      <ul>
-        <% @event.errors.full_messages.each do |msg| %>
-          <li><%= msg %></li>
-        <% end %>
-      </ul>
-    </div>
-  <% end %>
-  <p>
-    <%= form.label :title %><br>
-    <%= form.text_field :title %>
-  </p>
- 
-  <p>
-    <%= form.label :text %><br>
-    <%= form.text_area :text %>
-  </p>
- <p>
-  	<%= form.label :status %>
-  	<%= form.select :status, [['Hot','hot'],['Medium','medium'],['Cold','cold']]%>
-  </p>
-  <p>
-  	
-    <%= select_datetime Time.now, prefix: :event %>
-  </p>
-  <p>
-  	<%= form.label :resolved %>
-  	<%= form.select :resolved, [['Active','false'],['Resolved','true']]%>
-  </p>
-  <p>
-    <%= form.submit %>
-  </p>
- 
-<% end %>
- 
-<%= link_to 'Back', events_path %>
+<div id ="header">
+	<div class = "inner">
+		<h1>Status Checker</h1>
+		<ul>
+ 			<li><%= link_to 'Home Page', controller: 'welcome' %></li>
+ 			<li><%= link_to 'List of All Scheduled Events', controller: 'events' %></li>
+			<li><%= link_to 'List of All  Resolved Scheduled Events', controller: 'resolved' %></li>
+			<li><%= link_to 'RSS Feed', feed_path+".rss", :action => 'show', :format => :rss%></li>
+ 		</ul>
+ 	</div>
+</div>
+<div id ="content">
+	<div class="inner">
+		<h1>Edit Event</h1>
+		 
+		<%= form_with(model: @event) do |form| %>
+		 <% if @event.errors.any? %>
+		    <div id="error_explanation">
+		      <h2>
+		        <%= pluralize(@event.errors.count, "error") %> prohibited
+		        this event from being saved:
+		      </h2>
+		      <ul>
+		        <% @event.errors.full_messages.each do |msg| %>
+		          <li><%= msg %></li>
+		        <% end %>
+		      </ul>
+		    </div>
+		  <% end %>
+		  <p>
+		    <%= form.label :title %><br>
+		    <%= form.text_field :title %>
+		  </p>
+		 
+		  <p>
+		    <%= form.label :text %><br>
+		    <%= form.text_area :text %>
+		  </p>
+		 <p>
+		  	<%= form.label :status %>
+		  	<%= form.select :status, [['Critical','critical'],['Severe','severe'],['Important','important']]%>
+		  </p>
+		  <p>
+		  	<%= form.label(:datetime, "Date and Time")%>
+		    <%= select_datetime @event.datetime, prefix: :event %>
+		  </p>
+		  <p>
+		  	<%= form.label :resolved %>
+		  	<%= form.select :resolved, [['Active','false'],['Resolved','true']]%>
+		  </p>
+		  <p>
+		    <%= form.submit %>
+		  </p>
+		 
+		<% end %>
+		 
+		<%= link_to 'Back', events_path %>
+	</div>
+</div>
