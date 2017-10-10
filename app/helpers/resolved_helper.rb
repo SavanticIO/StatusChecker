@@ -1,0 +1,2 @@
+module ResolvedHelper
+end

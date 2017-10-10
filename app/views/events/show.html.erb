@@ -19,5 +19,31 @@
   <strong>Date:</strong>
   <%= @event.datetime%>
 </p>
+<h2>Comments</h2>
+<% @event.comments.each do |comment| %>
+  <p>
+    <strong>Commenter:</strong>
+    <%= comment.commenter %>
+  </p>
+ 
+  <p>
+    <strong>Comment:</strong>
+    <%= comment.body %>
+  </p>
+<% end %>
+<h2>Add a Comment:</h2>
+<%= form_with(model: [ @event, @event.comments.build ], local: true) do |form| %>
+  <p>
+    <%= form.label :commenter %><br>
+    <%= form.text_field :commenter %>
+  </p>
+  <p>
+    <%= form.label :body %><br>
+    <%= form.text_area :body %>
+  </p>
+  <p>
+    <%= form.submit %>
+  </p>
+<% end %>
 <%= link_to 'Edit', edit_event_path(@event) %>
 <%= link_to 'Back', events_path %>

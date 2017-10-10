@@ -1,19 +1,18 @@
 <h1>Status Checker</h1>
-<%= link_to 'List of all Scheduled Events', controller: 'events' %>
+<%= link_to 'List of All Scheduled Events', controller: 'events' %>
+<%= link_to 'List of All  Resolved Scheduled Events', controller: 'resolved' %>
 <p>List of Active Events</p>
 <table>
 	<tr>
   	<th>Status</th>
     <th>Title</th>
-    <th>Text</th>
     <th>Date Scheduled</th>
     <th>Resolved</th>
   </tr>
 	<% @active.each do |event| %>
     <tr>
       <td><%= event.status %></td>	
-      <td><%= event.title %></td>
-      <td><%= event.text %></td>
+      <td><%= link_to event.title, event_path(event) %></td>
       <td><%= event.datetime%></td>
       <td><%= event.resolved%></td>
     </tr>
@@ -24,15 +23,13 @@
 	<tr>
   	<th>Status</th>
     <th>Title</th>
-    <th>Text</th>
     <th>Date Scheduled</th>
     <th>Resolved</th>
   </tr>
 	<% @future.each do |event| %>
     <tr>
       <td><%= event.status %></td>	
-      <td><%= event.title %></td>
-      <td><%= event.text %></td>
+      <td><%= link_to event.title, event_path(event) %></td>
       <td><%= event.datetime%></td>
       <td><%= event.resolved%></td>
     </tr>
