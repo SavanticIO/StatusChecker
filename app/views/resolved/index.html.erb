@@ -6,7 +6,7 @@
     <th>Date Scheduled</th>
     <th>Resolved</th>
   </tr>
-	<% @resolved.each do |event| %>
+	<% @resolvedpageinate.each do |event| %>
     <tr>
       <td><%= event.status %></td>	
       <td><%= link_to event.title, event_path(event) %></td>
@@ -15,4 +15,5 @@
     </tr>
   <% end %>
 </table>
+<%= will_paginate @resolvedpageinate %>
 <%= link_to 'Home Page', controller: 'welcome' %>

@@ -1,7 +1,7 @@
 <h1>Status Checker</h1>
 <%= link_to 'List of All Scheduled Events', controller: 'events' %>
 <%= link_to 'List of All  Resolved Scheduled Events', controller: 'resolved' %>
-<p>List of Active Events</p>
+<h2>List of Active Events</h2>
 <table>
 	<tr>
   	<th>Status</th>
@@ -18,7 +18,7 @@
     </tr>
   <% end %>
 </table>
-<p>List of Future Events</p>
+<h2>List of Future Events</h2>
 <table>
 	<tr>
   	<th>Status</th>
@@ -26,7 +26,7 @@
     <th>Date Scheduled</th>
     <th>Resolved</th>
   </tr>
-	<% @future.each do |event| %>
+	<% @futurepage.each do |event| %>
     <tr>
       <td><%= event.status %></td>	
       <td><%= link_to event.title, event_path(event) %></td>
@@ -35,3 +35,4 @@
     </tr>
   <% end %>
 </table>
+<%= will_paginate @futurepage %>
