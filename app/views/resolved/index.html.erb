@@ -1,19 +1,23 @@
-<h1>List of All Resolved Events</h1>
-<table>
-	<tr>
-  	<th>Status</th>
-    <th>Title</th>
-    <th>Date Scheduled</th>
-    <th>Resolved</th>
-  </tr>
-	<% @resolvedpageinate.each do |event| %>
-    <tr>
-      <td><%= event.status %></td>	
-      <td><%= link_to event.title, event_path(event) %></td>
-      <td><%= event.datetime%></td>
-      <td><%= event.resolved%></td>
-    </tr>
-  <% end %>
-</table>
-<%= will_paginate @resolvedpageinate %>
-<%= link_to 'Home Page', controller: 'welcome' %>
+<div id = "header">
+	<div class = "inner">
+		<h1>Status Checker</h1>
+		<ul>
+			<li><%= link_to 'Home Page', controller: 'welcome' %></li>
+		</ul>
+	</div>
+</div>
+<div id = "content">
+	<div class = "inner">
+		<h3 class= "future" >Resolved Events</h3>
+			<% @resolvedpageinate.each do |event| %>
+		    <ul  class = "events resolved">	
+		      <li class = "event" style>
+		      	<h4 style><%= link_to event.title, event_path(event) %><h4>
+		      	<p class = "date"><%= event.datetime%></p>
+		      </li>
+		    </ul>
+		  <% end %>
+		</table>
+		<%= will_paginate @resolvedpageinate %>
+	</div>
+</div>

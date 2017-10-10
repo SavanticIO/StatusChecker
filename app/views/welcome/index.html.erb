@@ -1,38 +1,52 @@
-<h1>Status Checker</h1>
-<%= link_to 'List of All Scheduled Events', controller: 'events' %>
-<%= link_to 'List of All  Resolved Scheduled Events', controller: 'resolved' %>
-<h2>List of Active Events</h2>
-<table>
-	<tr>
-  	<th>Status</th>
-    <th>Title</th>
-    <th>Date Scheduled</th>
-    <th>Resolved</th>
-  </tr>
-	<% @active.each do |event| %>
-    <tr>
-      <td><%= event.status %></td>	
-      <td><%= link_to event.title, event_path(event) %></td>
-      <td><%= event.datetime%></td>
-      <td><%= event.resolved%></td>
-    </tr>
-  <% end %>
-</table>
-<h2>List of Future Events</h2>
-<table>
-	<tr>
-  	<th>Status</th>
-    <th>Title</th>
-    <th>Date Scheduled</th>
-    <th>Resolved</th>
-  </tr>
-	<% @futurepage.each do |event| %>
-    <tr>
-      <td><%= event.status %></td>	
-      <td><%= link_to event.title, event_path(event) %></td>
-      <td><%= event.datetime%></td>
-      <td><%= event.resolved%></td>
-    </tr>
-  <% end %>
-</table>
-<%= will_paginate @futurepage %>
+<div id = header>
+	<div class=inner>
+		<h1>Status Checker</h1>
+		<ul>
+		<li>
+			<%= link_to 'List of All Scheduled Events', controller: 'events' %>
+		</li>
+		<li>
+			<%= link_to 'List of All  Resolved Scheduled Events', controller: 'resolved' %>
+		</li>
+		</ul>
+	</div>
+</div>
+<div id = content>
+	<div class = inner>
+		<h2>List of Active Events</h2>
+		<table>
+			<tr>
+		  	<th>Status</th>
+		    <th>Title</th>
+		    <th>Date Scheduled</th>
+		    <th>Resolved</th>
+		  </tr>
+			<% @active.each do |event| %>
+		    <tr>
+		      <td><%= event.status %></td>	
+		      <td><%= link_to event.title, event_path(event) %></td>
+		      <td><%= event.datetime%></td>
+		      <td><%= event.resolved%></td>
+		    </tr>
+		  <% end %>
+		</table>
+		<h2>List of Future Events</h2>
+		<table>
+			<tr>
+		  	<th>Status</th>
+		    <th>Title</th>
+		    <th>Date Scheduled</th>
+		    <th>Resolved</th>
+		  </tr>
+			<% @futurepage.each do |event| %>
+		    <tr>
+		      <td><%= event.status %></td>	
+		      <td><%= link_to event.title, event_path(event) %></td>
+		      <td><%= event.datetime%></td>
+		      <td><%= event.resolved%></td>
+		    </tr>
+		  <% end %>
+		</table>
+		<%= will_paginate @futurepage %>
+	</div class = inner>
+</div>
