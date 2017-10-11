@@ -4,7 +4,7 @@
 		<ul>
  			<li><%= link_to 'Home Page', controller: 'welcome' %></li>
  			<li><%= link_to 'List of All Scheduled Events', controller: 'events' %></li>
-			<li><%= link_to 'List of All  Resolved Scheduled Events', controller: 'resolved' %></li>
+			<li><%= link_to 'List of All  Resolved Events', controller: 'resolved' %></li>
 			<li><%= link_to 'RSS Feed', feed_path+".rss", :action => 'show', :format => :rss%></li>
 			<li><%= link_to 'Create New Event', new_event_path %></li>
  		</ul>
@@ -31,7 +31,7 @@
 		<%if @event.resolved%>
 			<p class="meta">Resolved at: <%= @event.resolvetime %></p>
 		<%else%>
-			<p class="meta">Last updated at: <%= @event.updated_at%></p>
+			<p class="meta">Last updated at: <%= @event.updated_at+3600%></p>
 		<%end%>
 		<div class="afm cfm">
 			<p><%= @event.text%></p>
@@ -44,8 +44,9 @@
 			<h2>Latest update</h2>
 			<div class="comment">
 			<% @event.comments.each do |comment| %>
-				<h4 class="meta">Updated at:<%=comment.created_at%> by <%= comment.commenter %></h4>	
+				<h4 class="meta">Updated at:<%=comment.updated_at+3600%> by <%= comment.commenter %></h4>	
 				<div class = "options">
+				<h4 class="showedit"><%= link_to 'Edit', edit_event_comment_path(@event,comment) %></h4>
   				<h4 class="delete"><%= link_to 'Delete Comment', [comment.event, comment], method: :delete,data: { confirm: 'Are you sure?' } %></h4>
 				</div>
 				<div class="afm cfm">	 
@@ -55,23 +56,7 @@
 			  </div>
 			<% end %>
 			</div>
-			<h2>Add a Comment:</h2>
-			<br>
-			<%= form_with(model: [ @event, @event.comments.build ], local: true) do |form| %>
-			  <p>
-			    <%= form.label :commenter %><br>
-			    <%= form.text_field :commenter %>
-			  </p>
-			  <br>
-			  <p>
-			    <%= form.label :body %><br>
-			    <%= form.text_area :body %>
-			  </p>
-			  <br>
-			  <p>
-			    <%= form.submit %>
-			  </p>
-			<% end %>
+			<h2 class="addcomment"><%= link_to 'Add Comment:', new_event_comment_path(@event) %></h2>
 		</div>
 	</div>
 </div>

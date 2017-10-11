@@ -52,13 +52,15 @@ class EventsController < ApplicationController
   
   private 
     def event_params
+      if !params[:event][:year].blank?
       datetime = DateTime.new(params[:event][:year].to_i, params[:event][:month].to_i, params[:event][:day].to_i, params[:event][:hour].to_i, params[:event][:minute].to_i)
+      datetimehash = { "datetime" => datetime}
+      end
       if params[:event][:resolved]
         resolvetime = Time.now + 3600
         resolvetimehash = { "resolvetime" => resolvetime}
       end
       others = params.require(:event).permit(:title, :text, :status,:resolved) 
-      datetimehash = { "datetime" => datetime}
       if params[:event][:resolved]
         mergehashone = others.merge(datetimehash)
         mergehashtwo = mergehashone.merge(resolvetimehash)

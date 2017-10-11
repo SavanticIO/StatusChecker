@@ -4,7 +4,7 @@
 		<ul>
  			<li><%= link_to 'Home Page', controller: 'welcome' %></li>
  			<li><%= link_to 'List of All Scheduled Events', controller: 'events' %></li>
-			<li><%= link_to 'List of All  Resolved Scheduled Events', controller: 'resolved' %></li>
+			<li><%= link_to 'List of All  Resolved Events', controller: 'resolved' %></li>
 			<li><%= link_to 'RSS Feed', feed_path+".rss", :action => 'show', :format => :rss%></li>
 			<li><%= link_to 'Create New Event', new_event_path %></li>
  		</ul>
@@ -14,6 +14,7 @@
 	<div class = "inner">
 		<h3 class= "future" >All Events</h3>
 		<ul  class = "events resolved">
+			<%if !@events.blank? %>
 		  	<% @events.each do |event| %>
 		      	<li class = "event" style>
 		      	<div class = "stat">			      
@@ -45,7 +46,9 @@
 		      </li>
 		    
 		  	<% end %>
-		  	
+		  	<%else%>
+		  		<h2>There are currently no Resolved, Active or Scheduled events</h2>
+		  	<%end%>
 		  </ul>
 				<%= will_paginate @events %>
 	</div>

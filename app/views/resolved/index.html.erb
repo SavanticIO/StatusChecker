@@ -4,7 +4,7 @@
 		<ul>
 			<li><%= link_to 'Home Page', controller: 'welcome' %></li>
 			<li><%= link_to 'List of All Scheduled Events', controller: 'events' %></li>
-			<li><%= link_to 'List of All  Resolved Scheduled Events', controller: 'resolved' %></li>
+			<li><%= link_to 'List of All  Resolved Events', controller: 'resolved' %></li>
 			<li><%= link_to 'RSS Feed', feed_path+".rss", :action => 'show', :format => :rss%></li>
 			<li><%= link_to 'Create New Event', new_event_path %></li>
 		</ul>
@@ -14,6 +14,7 @@
 	<div class = "inner">
 		<h3 class= "future" >Resolved Events</h3>
 		<ul  class = "events resolved">
+			<%if !@resolvedpageinate.blank? %>
 		  	<% @resolvedpageinate.each do |event| %>
 		      	<li class = "event" style>
 		      	<div class = "stat">			      
@@ -33,10 +34,19 @@
 		      	</div>
 		      	
 		      	<h4 class ="title"><%= link_to event.title, event_path(event) %></h4>
-		      	<p class = "date">Resolved At:  <%= event.resolvetime%></p>		      
+		      	<p class = "date">Resolved At:  <%= event.resolvetime%></p>		  
+		      	<div class = "options">
+		      		
+		      		<h4 class="edit"><%= link_to 'Edit', edit_event_path(event)%></h4>
+		      		<h4 class="destroy"><%= link_to 'Destroy', event_path(event),method: :delete, data: { confirm: 'Are you sure?' } %></h4>
+		      		
+		      	</div>    
 		      </li>
 		    
 		  	<% end %>
+		  	<%else%>
+		  	<h2>There are currently no Resolved events</h2>
+		  	<%end%>
 		  	
 		  </ul>
 				<%= will_paginate @resolvedpageinate %>

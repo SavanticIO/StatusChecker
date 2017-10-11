@@ -11,6 +11,9 @@
 </div>
 <div id ="content">
 	<div class="inner">
+		<div class="options">
+		<h4 class ="back"><%= link_to 'Back', events_path %></h4>
+		</div>
 		<h1>Edit Event</h1>
 		 
 		<%= form_with(model: @event) do |form| %>
@@ -27,33 +30,37 @@
 		      </ul>
 		    </div>
 		  <% end %>
+		  <br>
 		  <p>
 		    <%= form.label :title %><br>
 		    <%= form.text_field :title %>
 		  </p>
-		 
+		 <br>
 		  <p>
 		    <%= form.label :text %><br>
 		    <%= form.text_area :text %>
 		  </p>
+		  <br>
 		 <p>
 		  	<%= form.label :status %>
 		  	<%= form.select :status, [['Critical','critical'],['Severe','severe'],['Important','important']]%>
 		  </p>
+		  <br>
 		  <p>
 		  	<%= form.label(:datetime, "Date and Time")%>
 		    <%= select_datetime @event.datetime, prefix: :event %>
 		  </p>
+		  <br>
 		  <p>
 		  	<%= form.label :resolved %>
 		  	<%= form.select :resolved, [['Active','false'],['Resolved','true']]%>
 		  </p>
+		  <br>
 		  <p>
 		    <%= form.submit %>
 		  </p>
 		 
 		<% end %>
 		 
-		<%= link_to 'Back', events_path %>
 	</div>
 </div>

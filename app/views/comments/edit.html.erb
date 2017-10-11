@@ -1,0 +1,42 @@
+<div id ="header">
+	<div class = "inner">
+		<h1>Status Checker</h1>
+		<ul>
+ 			<li><%= link_to 'Home Page', controller: 'welcome' %></li>
+ 			<li><%= link_to 'List of All Scheduled Events', controller: 'events' %></li>
+			<li><%= link_to 'List of All  Resolved Events', controller: 'resolved' %></li>
+			<li><%= link_to 'RSS Feed', feed_path+".rss", :action => 'show', :format => :rss%></li>
+			<li><%= link_to 'Create New Event', new_event_path %></li>
+ 		</ul>
+	</div>
+</div>
+<div id ="content">
+	<div class="inner">
+		<div class="options">
+		<h4 class ="back"><%= link_to 'Back', event_path(@event) %></h4>
+		</div>
+		<h1>Add a Comment:</h1>
+			<br>
+			<%= form_with(model: [ @event, @event.comments.find(params[:id]) ]) do |form| %>
+			  <p>
+			    <%= form.label :commenter %><br>
+			    <%= form.text_field :commenter %>
+			  </p>
+			  <br>
+			  <p>
+			    <%= form.label :body %><br>
+			    <%= form.text_area :body %>
+			  </p>
+			  <br>
+		  	<%= form.fields_for :event, url: events_path, local: true do |e| %>
+    		<%= e.label :resolved %>
+		  	<%= e.select :resolved, [['Active','false'],['Resolved','true']]%>
+			<% end %>
+		  	<br>
+		  	<br />
+			  <p>
+			    <%= form.submit %>
+			  </p>
+			<% end %>
+	</div>
+</div>
